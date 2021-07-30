@@ -1,3 +1,5 @@
 django
 django-heroku
-python
+gunicorn
+whitenoise
+dj-database-url
