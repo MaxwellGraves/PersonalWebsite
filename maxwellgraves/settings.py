@@ -25,12 +25,13 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = "django-insecure-+cp^31vew#@wz74ti%f49=pbx9fwh-tl%kh8$ggarfk&$nnj%r"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Application definition
 
 INSTALLED_APPS = [
     "home",
+    "tictactoe",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -130,6 +131,7 @@ STATIC_URL = "/static/"
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, "static"),
+    os.path.join(BASE_DIR, "boot"),  # Bootstrap directory
 ]
 
 # Simplified static file serving.
