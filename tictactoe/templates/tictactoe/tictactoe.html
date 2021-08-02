@@ -1,3 +1,27 @@
 {% extends "maxwellgraves/base.html" %} {% block content %}
-<h1>Hello from the tictactoe page</h1>
+<!DOCTYPE html>
+<head>
+  {% load static %} <link rel="stylesheet" href={% static "css/tictactoe.css" %}
+  />
+</head>
+<div class="container" id="main">
+  <span id="title">Tic Tac Toe</span>
+  <button class="box" style="border-left: 0; border-top: 0" id="box1"></button>
+  <button class="box" style="border-top: 0" id="box2"></button>
+  <button class="box" style="border-top: 0; border-right: 0" id="box3"></button>
+  <button class="box" style="border-left: 0" id="box4"></button>
+  <button class="box" id="box5"></button>
+  <button class="box" style="border-right: 0" id="box6"></button>
+  <button
+    class="box"
+    style="border-left: 0; border-bottom: 0"
+    id="box7"
+  ></button>
+  <button class="box" style="border-bottom: 0" id="box8"></button>
+  <button
+    class="box"
+    style="border-right: 0; border-bottom: 0"
+    id="box9"
+  ></button>
+</div>
 {% endblock %}
