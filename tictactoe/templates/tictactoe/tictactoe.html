@@ -6,22 +6,73 @@
 </head>
 <div class="container" id="main">
   <span id="title">Tic Tac Toe</span>
-  <button class="box" style="border-left: 0; border-top: 0" id="box1"></button>
-  <button class="box" style="border-top: 0" id="box2"></button>
-  <button class="box" style="border-top: 0; border-right: 0" id="box3"></button>
-  <button class="box" style="border-left: 0" id="box4"></button>
-  <button class="box" id="box5"></button>
-  <button class="box" style="border-right: 0" id="box6"></button>
-  <button
-    class="box"
-    style="border-left: 0; border-bottom: 0"
-    id="box7"
-  ></button>
-  <button class="box" style="border-bottom: 0" id="box8"></button>
-  <button
-    class="box"
-    style="border-right: 0; border-bottom: 0"
-    id="box9"
-  ></button>
+  <form action="{% url 'square-click' %}" method="post">
+    {% csrf_token %}
+    <input
+      type="submit"
+      class="box"
+      style="border-left: 0; border-top: 0"
+      name="box0"
+      value={{sq0}}
+    ></input>
+    <input
+      type="submit"
+      class="box"
+      style="border-top: 0"
+      name="box1"
+      value={{sq1}}
+    ></input>
+    <input
+      type="submit"
+      class="box"
+      style="border-top: 0; border-right: 0"
+      name="box2"
+      value={{sq2}}
+    ></input>
+    <input
+      type="submit"
+      class="box"
+      style="border-left: 0"
+      name="box3"
+      value={{sq3}}
+    ></input>
+    <input
+      type="submit"
+      class="box"
+      name="box4"
+      value={{sq4}}
+    ></input>
+    <input
+      type="submit"
+      class="box"
+      style="border-right: 0"
+      name="box5"
+      value={{sq5}}
+    ></input>
+    <input
+      type="submit"
+      class="box"
+      style="border-left: 0; border-bottom: 0"
+      name="box6"
+      value={{sq6}}
+    ></input>
+    <input
+      type="submit"
+      class="box"
+      style="border-bottom: 0"
+      name="box7"
+      value={{sq7}}
+    ></input>
+    <input
+      type="submit"
+      class="box"
+      style="border-right: 0; border-bottom: 0"
+      name="box8"
+      value={{sq8}}
+    ></input>
+  </form>
+  {% if win %}
+  <span id="win-message">{{win}} Won!</span> 
+  {% endif %}
 </div>
 {% endblock %}
