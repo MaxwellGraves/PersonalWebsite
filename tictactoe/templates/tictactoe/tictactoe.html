@@ -8,6 +8,9 @@
   <span id="title">Tic Tac Toe</span>
   <form action="{% url 'square-click' %}" method="post">
     {% csrf_token %}
+    <span>
+      <input type='submit' data-toggle="button" name="first-toggle" value="{{ first }} Going First"></input>
+    </span>
     <input
       type="submit"
       class="box"

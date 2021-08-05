@@ -3,7 +3,7 @@ from random import randrange
 
 # Create your views here.
 def tictactoe(request):
-    board = [""] * 9
+    board = [""] * 9 + ["X"]
     with open("board.txt", "w") as f:
         f.write(" ".join(board))
     return square_click(request)
@@ -12,11 +12,15 @@ def tictactoe(request):
 def square_click(request):
     with open("board.txt", "r") as f:
         board = f.readline().split(" ")
-    for i in range(9):
-        if "box" + str(i) in request.POST and board[i] == "":
-            board[i] = "X"
+    if "first-toggle" in request.POST:
+        board = [""] * 9 + ["O" if board[-1] == "X" else "X"]
     winCheck = detectWin(board)
     if winCheck == "":
+        for i in range(9):
+            if "box" + str(i) in request.POST and board[i] == "":
+                board[i] = "X"
+
+    if winCheck == "" and (board[-1] == "O" or "".join(board) != "X"):
         board = makeMove(board)
     winCheck = detectWin(board)
     with open("board.txt", "w") as f:
@@ -24,6 +28,7 @@ def square_click(request):
 
     boardContext = {"sq" + str(i): board[i] for i in range(9)}
     boardContext["win"] = winCheck
+    boardContext["first"] = board[-1]
     return render(request, "tictactoe/tictactoe.html", boardContext)
 
 
