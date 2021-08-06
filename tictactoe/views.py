@@ -12,27 +12,53 @@ def tictactoe(request):
 def square_click(request):
     with open("board.txt", "r") as f:
         board = f.readline().split(" ")
-    if "first-toggle" in request.POST:
-        board = [""] * 9 + ["O" if board[-1] == "X" else "X"]
-    winCheck = detectWin(board)
-    if winCheck == "":
-        for i in range(9):
-            if "box" + str(i) in request.POST and board[i] == "":
-                board[i] = "X"
+    if detect_win(board):
+        return render_board(request, board)
+    validSquare = False
+    for i in range(9):
+        if "box" + str(i) in request.POST and board[i] == "":
+            board[i] = "X"
+            validSquare = True
 
-    if winCheck == "" and (board[-1] == "O" or "".join(board) != "X"):
-        board = makeMove(board)
-    winCheck = detectWin(board)
+    if validSquare:
+        board = make_move(board)
+
     with open("board.txt", "w") as f:
         f.write(" ".join(board))
 
+    return render_board(request, board)
+
+
+def change_first(request):
+    with open("board.txt", "r") as f:
+        board = f.readline().split(" ")
+    board = [""] * 9 + ["X" if board[-1] == "O" else "O"]
+    if board[-1] == "O":
+        board = make_move(board)
+    with open("board.txt", "w") as f:
+        f.write(" ".join(board))
+    return render_board(request, board)
+
+
+def new_game(request):
+    with open("board.txt", "r") as f:
+        board = f.readline().split(" ")
+    board = [""] * 9 + [board[-1]]
+    if board[-1] == "O":
+        board = make_move(board)
+    with open("board.txt", "w") as f:
+        f.write(" ".join(board))
+    return render_board(request, board)
+
+
+def render_board(request, board):
     boardContext = {"sq" + str(i): board[i] for i in range(9)}
-    boardContext["win"] = winCheck
+    boardContext["win"] = detect_win(board)
     boardContext["first"] = board[-1]
     return render(request, "tictactoe/tictactoe.html", boardContext)
 
 
-def detectWin(board):
+def detect_win(board):
     # Check Rows
     sets = [
         (0, 1, 2),
@@ -51,7 +77,7 @@ def detectWin(board):
     return ""
 
 
-def makeMove(board):
+def make_move(board):
     empties = [i for i in range(9) if board[i] == ""]
     print(empties)
     if len(empties) == 0:
